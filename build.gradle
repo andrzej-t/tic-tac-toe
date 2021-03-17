@@ -10,7 +10,7 @@ javafx {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
-mainClassName = 'game.App'
+mainClassName = 'tic_tac_toe.App'
 
 repositories {
     mavenCentral()
