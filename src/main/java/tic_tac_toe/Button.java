@@ -36,4 +36,13 @@ public class Button extends javafx.scene.control.Button {
             this.setState(-1);
         }
     }
+
+    public void computerMove() {
+        System.out.println("Now computer moves as... ");
+    }
+
+    public  void quitGame() {
+        System.out.println("Finishing game");
+    }
+
 }
