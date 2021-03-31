@@ -221,6 +221,8 @@ public class App extends Application {
                 if (event.getButton() == MouseButton.PRIMARY && !buttonO.isManaged()) {
                     if (!turnX || !buttonX.isDisable())
                         return;
+                    if (!text.getText().isEmpty())
+                        return;
                     drawX();
                     checkState();
                     turnX = false;
@@ -233,6 +235,9 @@ public class App extends Application {
                 else if (event.getButton() == MouseButton.PRIMARY && buttonO.isManaged()) {
                     if (turnX || !buttonO.isDisable())
                         return;
+
+                    if (!text.getText().isEmpty())
+                        return;
                     drawO();
                     checkState();
                     turnX = true;
@@ -240,6 +245,7 @@ public class App extends Application {
                     checkState();
                     turnX = false;
                 }
+
             });
         }
 
@@ -270,8 +276,10 @@ public class App extends Application {
             if (text.getText().isEmpty()) {
                 text.setFill(Color.BEIGE);
                 text.setText("X");
-            }else  if (!text.getText().isEmpty()) {
-                computerMoveX();
+                text.isDisable();
+            }
+            else  if (!text.getText().isEmpty()) {
+              computerMoveX();
             }
         }
 
@@ -279,10 +287,13 @@ public class App extends Application {
             if (text.getText().isEmpty()) {
                 text.setFill(Color.BLACK);
                 text.setText("O");
-            } else  if (!text.getText().isEmpty()) {
+                text.isDisable();
+            }
+            else  if (!text.getText().isEmpty()) {
                 computerMoveO();
             }
         }
+
     }
 
     public static void main(String[] args) {
