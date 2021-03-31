@@ -21,7 +21,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -34,7 +33,6 @@ public class App extends Application {
     private final Tile [][] board = new Tile [3][3];
     private final Pane root = new Pane();
     Stage primaryStage;
-    boolean end;
 
     Image imageBack = new Image("file:src/main/resources/blackboard.png");
     BackgroundSize backgroundSize = new BackgroundSize(1920, 1280, false, false, false, false);
@@ -57,7 +55,7 @@ public class App extends Application {
         label.setBackground(background);
         label.setAlignment(Pos.BASELINE_CENTER);
         label.setStyle("-fx-font-size: 24px; -fx-text-fill: beige");
-        label.setText("You can \n chose: \n O or X");
+        label.setText(" Make \nchoice! \nO or X");
 
         EventHandler<MouseEvent> playAsO = new EventHandler<>() {
             @Override
@@ -177,7 +175,6 @@ public class App extends Application {
         line.setEndX(combo.tiles[0].getCenterX());
         line.setEndY(combo.tiles[0].getCenterY());
 
-
         root.getChildren().add(line);
 
         Timeline timeline = new Timeline();
@@ -217,11 +214,12 @@ public class App extends Application {
             getChildren().addAll(border, text);
 
             setOnMouseClicked(event -> {
-                if (!playable)
+                if (!playable) {
                     return;
+                }
 
                 if (event.getButton() == MouseButton.PRIMARY && !buttonO.isManaged()) {
-                    if (!turnX || text.isDisable())
+                    if (!turnX || !buttonX.isDisable())
                         return;
                     drawX();
                     checkState();
@@ -233,7 +231,7 @@ public class App extends Application {
                 }
 
                 else if (event.getButton() == MouseButton.PRIMARY && buttonO.isManaged()) {
-                    if (turnX || text.isDisable())
+                    if (turnX || !buttonO.isDisable())
                         return;
                     drawO();
                     checkState();
@@ -242,22 +240,18 @@ public class App extends Application {
                     checkState();
                     turnX = false;
                 }
-
             });
         }
 
         Random randomX = new Random();
         Random randomY = new Random();
 
-        int n = randomX.nextInt(3);
-        int k = randomY.nextInt(3);
-
         public void computerMoveO() {
-            board[n][k].drawO();
+            board[randomX.nextInt(3)][randomY.nextInt(3)].drawO();
         }
 
         public void computerMoveX() {
-            board[n][k].drawX();
+                board[randomX.nextInt(3)][randomY.nextInt(3)].drawX();
         }
 
         public double getCenterX() {
@@ -273,30 +267,22 @@ public class App extends Application {
         }
 
         private void drawX() {
-
-                if (!text.isDisable()) {
-                    text.setDisable(true);
-                    text.setFill(Color.BEIGE);
-                    text.setText("X");
-                    end=true;
-                } else if (text.isDisable())
-                    while (!end)
-                    drawX();
-
+            if (text.getText().isEmpty()) {
+                text.setFill(Color.BEIGE);
+                text.setText("X");
+            }else  if (!text.getText().isEmpty()) {
+                computerMoveX();
             }
-
-        private void drawO() {
-
-             if (!text.isDisable()) {
-                 text.setDisable(true);
-                 text.setFill(Color.BLACK);
-                 text.setText("O");
-                 end=true;
-             } else if (text.isDisable())
-                 while (!end)
-                     drawO();
         }
 
+        private void drawO() {
+            if (text.getText().isEmpty()) {
+                text.setFill(Color.BLACK);
+                text.setText("O");
+            } else  if (!text.getText().isEmpty()) {
+                computerMoveO();
+            }
+        }
     }
 
     public static void main(String[] args) {
