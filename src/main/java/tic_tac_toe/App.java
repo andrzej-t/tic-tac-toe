@@ -34,6 +34,7 @@ public class App extends Application {
     private final Tile [][] board = new Tile [3][3];
     private final Pane root = new Pane();
     Stage primaryStage;
+    boolean end;
 
     Image imageBack = new Image("file:src/main/resources/blackboard.png");
     BackgroundSize backgroundSize = new BackgroundSize(1920, 1280, false, false, false, false);
@@ -162,6 +163,8 @@ public class App extends Application {
                 playable=false;
                 playWinAnimation(combo);
                 label.setText("End of the game!");
+                buttonO.setDisable(true);
+                buttonX.setDisable(true);
                 break;
             }
         }
@@ -270,22 +273,28 @@ public class App extends Application {
         }
 
         private void drawX() {
-            if (text.isDisable()) {
-                return;
+
+                if (!text.isDisable()) {
+                    text.setDisable(true);
+                    text.setFill(Color.BEIGE);
+                    text.setText("X");
+                    end=true;
+                } else if (text.isDisable())
+                    while (!end)
+                    drawX();
+
             }
-            text.setDisable(true);
-            text.setFill(Color.BEIGE);
-            text.setText("X");
-        }
 
         private void drawO() {
-            if (text.isDisable()){
-                return;
-            }
-            text.setDisable(true);
-            text.setFill(Color.BLACK);
-            text.setText("O");
 
+             if (!text.isDisable()) {
+                 text.setDisable(true);
+                 text.setFill(Color.BLACK);
+                 text.setText("O");
+                 end=true;
+             } else if (text.isDisable())
+                 while (!end)
+                     drawO();
         }
 
     }
