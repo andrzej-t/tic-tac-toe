@@ -225,10 +225,12 @@ public class App extends Application {
                         return;
                     drawX();
                     checkState();
+                    if (playable) {
                     turnX = false;
                     computerMoveO();
                     checkState();
                     turnX = true;
+                    }
 
                 }
 
@@ -241,9 +243,10 @@ public class App extends Application {
                     drawO();
                     checkState();
                     turnX = true;
+                    if (playable) {
                     computerMoveX();
                     checkState();
-                    turnX = false;
+                    turnX = false;}
                 }
 
             });
